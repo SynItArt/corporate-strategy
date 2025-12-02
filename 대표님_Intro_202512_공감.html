@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대표님 인트로 · 공감 버전</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { color-scheme: dark; }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: 'Pretendard', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            background: radial-gradient(circle at top, #020617 0, #020617 35%, #000 100%);
+            color: #e5e7eb;
+            line-height: 1.7;
+        }
+        .page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            padding: 1.5rem 2.4rem 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            color: #93c5fd;
+        }
+        header .logo-mark {
+            width: 30px;
+            height: 30px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #22c55e, #2563eb);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: white;
+        }
+        header .tagline {
+            font-size: 0.8rem;
+            color: #9ca3af;
+        }
+        main {
+            flex: 1;
+            padding: 0.5rem 2.4rem 3rem;
+            max-width: 1040px;
+            margin: 0 auto;
+        }
+        .hero {
+            display: grid;
+            grid-template-columns: minmax(0,1.3fr) minmax(0,1fr);
+            gap: 2.4rem;
+            padding: 2.3rem 2rem 2.4rem;
+            border-radius: 24px;
+            background:
+                radial-gradient(circle at top left, rgba(34,197,94,0.26), transparent 55%),
+                radial-gradient(circle at bottom right, rgba(59,130,246,0.2), transparent 55%),
+                rgba(15,23,42,0.98);
+            border: 1px solid rgba(148,163,184,0.55);
+            box-shadow: 0 24px 60px rgba(15,23,42,0.9);
+        }
+        .hero-title {
+            font-size: clamp(1.8rem, 2.3vw, 2.3rem);
+            line-height: 1.4;
+            margin: 0 0 1rem;
+        }
+        .hero-title strong {
+            color: #4ade80;
+        }
+        .hero-sub {
+            font-size: 0.98rem;
+            color: #d1d5db;
+            margin-bottom: 1.4rem;
+        }
+        .hero-sub em {
+            font-style: normal;
+            color: #facc15;
+            font-weight: 600;
+        }
+        .hero-pains {
+            margin-bottom: 1.5rem;
+            padding: 1.1rem 1.1rem 1.1rem;
+            border-radius: 16px;
+            border: 1px solid rgba(248,250,252,0.14);
+            background: rgba(15,23,42,0.9);
+            font-size: 0.9rem;
+        }
+        .hero-pains-title {
+            font-size: 0.86rem;
+            color: #f97316;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+        .hero-pains ul {
+            margin: 0;
+            padding-left: 1.2rem;
+        }
+        .hero-pains li {
+            margin-bottom: 0.25rem;
+        }
+        .hero-cta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            align-items: center;
+        }
+        .btn-primary {
+            padding: 0.85rem 1.9rem;
+            border-radius: 999px;
+            border: none;
+            font-weight: 700;
+            font-size: 0.92rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+            color: #022c22;
+            background: linear-gradient(120deg,#bef264,#22c55e);
+            box-shadow: 0 14px 34px rgba(34,197,94,0.5);
+            -webkit-tap-highlight-color: rgba(34,197,94,0.3);
+            touch-action: manipulation;
+            user-select: none;
+        }
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+        .hero-note {
+            font-size: 0.8rem;
+            color: #9ca3af;
+        }
+        .profile-card {
+            border-radius: 20px;
+            background: rgba(15,23,42,0.98);
+            border: 1px solid rgba(148,163,184,0.6);
+            padding: 1.6rem;
+        }
+        .profile-photo {
+            width: 110px;
+            height: 110px;
+            border-radius: 999px;
+            margin: 0 auto 1rem;
+            background: radial-gradient(circle at 30% 20%, #f9fafb, #e5e7eb 50%, #9ca3af 80%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 16px 40px rgba(15,23,42,0.8);
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            -webkit-tap-highlight-color: rgba(34,197,94,0.3);
+            touch-action: manipulation;
+        }
+        .profile-photo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(34,197,94,0.4);
+        }
+        .profile-photo:active {
+            transform: scale(0.95);
+        }
+        @media (hover: none) {
+            .profile-photo:active {
+                transform: scale(0.95);
+                box-shadow: 0 20px 50px rgba(34,197,94,0.4);
+            }
+        }
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 999px;
+            display: block;
+        }
+        .profile-photo span {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: #1f2937;
+        }
+        .profile-name {
+            text-align: center;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.15rem;
+        }
+        .profile-role {
+            text-align: center;
+            font-size: 0.84rem;
+            color: #9ca3af;
+            margin-bottom: 1.1rem;
+        }
+        .profile-meta {
+            font-size: 0.83rem;
+            color: #d1d5db;
+        }
+        .profile-meta p {
+            margin: 0 0 0.6rem;
+        }
+        .profile-meta strong {
+            color: #93c5fd;
+        }
+        .section {
+            margin-top: 2.8rem;
+        }
+        .section-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 1.6rem;
+        }
+        .card {
+            background: rgba(15,23,42,0.96);
+            border-radius: 18px;
+            border: 1px solid rgba(148,163,184,0.5);
+            padding: 1.4rem 1.5rem;
+            font-size: 0.9rem;
+        }
+        .card h3 {
+            margin: 0 0 0.45rem;
+            font-size: 1rem;
+            color: #bbf7d0;
+        }
+        .card p {
+            margin: 0 0 0.5rem;
+        }
+        .card ul {
+            margin: 0.4rem 0 0;
+            padding-left: 1.1rem;
+        }
+        .card li {
+            margin-bottom: 0.3rem;
+        }
+        .mindmap-container {
+            margin-top: 1.4rem;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            background: rgba(15,23,42,0.98);
+            border: 1px solid rgba(148,163,184,0.5);
+            position: relative;
+            min-height: 850px;
+            overflow: hidden;
+        }
+        .mindmap-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #22c55e, #2563eb);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 20px 50px rgba(34,197,94,0.4);
+            z-index: 20;
+            border: 3px solid rgba(255,255,255,0.2);
+        }
+        .mindmap-center-title {
+            font-size: 1rem;
+            font-weight: 800;
+            color: white;
+            text-align: center;
+            line-height: 1.3;
+            margin-bottom: 0.3rem;
+        }
+        .mindmap-center-sub {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.9);
+            text-align: center;
+        }
+        .mindmap-branch {
+            position: absolute;
+            width: 300px;
+            z-index: 15;
+        }
+        .mindmap-branch.top-left {
+            top: 8%;
+            left: 8%;
+        }
+        .mindmap-branch.top-right {
+            top: 8%;
+            right: 8%;
+        }
+        .mindmap-branch.bottom {
+            bottom: 8%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 320px;
+        }
+        .mindmap-branch-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #4ade80;
+            margin-bottom: 0.8rem;
+            padding: 0.6rem 1rem;
+            border-radius: 12px;
+            background: rgba(34,197,94,0.15);
+            border: 1px solid rgba(34,197,94,0.3);
+            text-align: center;
+        }
+        .mindmap-items {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .mindmap-item {
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            background: rgba(15,23,42,0.9);
+            border: 1px solid rgba(148,163,184,0.4);
+            font-size: 0.85rem;
+            color: #e5e7eb;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .mindmap-item:hover {
+            border-color: rgba(34,197,94,0.6);
+            background: rgba(34,197,94,0.1);
+            transform: translateX(4px);
+        }
+        .mindmap-item strong {
+            color: #93c5fd;
+            font-weight: 600;
+        }
+        .mindmap-connector {
+            position: absolute;
+            border: 2px solid rgba(148,163,184,0.25);
+            z-index: 5;
+            pointer-events: none;
+        }
+        .mindmap-connector.top-left {
+            top: 50%;
+            left: 50%;
+            width: 280px;
+            height: 2px;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            transform-origin: left center;
+        }
+        .mindmap-connector.top-right {
+            top: 50%;
+            left: 50%;
+            width: 280px;
+            height: 2px;
+            transform: translate(-50%, -50%) rotate(45deg);
+            transform-origin: right center;
+        }
+        .mindmap-connector.bottom {
+            top: 50%;
+            left: 50%;
+            width: 2px;
+            height: 240px;
+            transform: translate(-50%, -50%);
+        }
+        @media (max-width: 960px) {
+            .mindmap-container {
+                min-height: auto;
+                padding: 2rem 1.5rem;
+            }
+            .mindmap-center {
+                position: relative;
+                top: auto;
+                left: auto;
+                transform: none;
+                margin: 0 auto 2.5rem;
+            }
+            .mindmap-branch {
+                position: relative;
+                top: auto;
+                left: auto;
+                right: auto;
+                bottom: auto;
+                transform: none;
+                width: 100%;
+                margin-bottom: 2rem;
+            }
+            .mindmap-branch.bottom {
+                width: 100%;
+            }
+            .mindmap-connector {
+                display: none;
+            }
+        }
+        footer {
+            padding: 1.2rem 2.4rem 1.8rem;
+            font-size: 0.78rem;
+            color: #6b7280;
+            text-align: right;
+        }
+        @media (max-width: 960px) {
+            header, main, footer { padding-left: 1.2rem; padding-right: 1.2rem; }
+            .hero {
+                grid-template-columns: minmax(0,1fr);
+                padding: 1.8rem 1.4rem 2rem;
+            }
+            .btn-primary {
+                width: 100%;
+                padding: 1rem 1.9rem;
+                font-size: 1rem;
+            }
+            .profile-photo {
+                width: 120px;
+                height: 120px;
+            }
+        }
+        /* 모바일 터치 최적화 */
+        a, button {
+            -webkit-tap-highlight-color: rgba(147,197,253,0.3);
+            touch-action: manipulation;
+        }
+        .screen-size-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .screen-size-modal.show {
+            display: flex;
+            opacity: 1;
+        }
+        .screen-size-modal-content {
+            background: rgba(15,23,42,0.98);
+            border: 1px solid rgba(148,163,184,0.6);
+            border-radius: 24px;
+            padding: 2.5rem 2.8rem;
+            max-width: 480px;
+            margin: 1rem;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.8);
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        .screen-size-modal.show .screen-size-modal-content {
+            transform: scale(1);
+        }
+        .screen-size-modal-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .screen-size-modal-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #4ade80;
+            margin-bottom: 1rem;
+        }
+        .screen-size-modal-text {
+            font-size: 0.95rem;
+            color: #d1d5db;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        .screen-size-modal-text strong {
+            color: #facc15;
+        }
+        .screen-size-modal-close {
+            padding: 0.85rem 2rem;
+            border-radius: 999px;
+            border: none;
+            font-weight: 700;
+            font-size: 0.92rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+            color: #022c22;
+            background: linear-gradient(120deg,#bef264,#22c55e);
+            box-shadow: 0 14px 34px rgba(34,197,94,0.5);
+            transition: transform 0.2s ease;
+        }
+        .screen-size-modal-close:hover {
+            transform: translateY(-2px);
+        }
+        .screen-size-modal-close:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <header>
+        <div>
+            <div class="logo">
+                <div class="logo-mark">SY</div>
+                <span>SYNDΛESIK · Corporate Deep Dive</span>
+            </div>
+            <div class="tagline">"대표님의 하루가 조금 덜 무거워지도록"</div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div>
+                <h1 class="hero-title">
+                    매일 숫자와 책임 사이에서 버티고 계신 대표님,<br>
+                    함께 길을 정리해 드리고 싶은 신대식입니다.
+                </h1>
+                <p class="hero-sub">
+                    재무제표, 세금 납부서, 직원과 가족의 삶, 내 건강과 은퇴 이후까지.  
+                    대표님은 늘 <em>"괜찮은 척"</em> 해야 해서, 정작 본인의 고민을 깊게 나누기 어렵습니다.  
+                    저는 법학·회생/파산 실무, 소방·안전, 데이터·AI, 금융 자격을 바탕으로  
+                    <strong>대표님의 현실을 먼저 듣고, 숫자와 제도로 함께 정리해 가는 동행자</strong>가 되고자 합니다.
+                </p>
+                <div class="hero-pains">
+                    <div class="hero-pains-title">많은 대표님들이 이렇게 말씀하셨습니다</div>
+                    <ul>
+                        <li>"법인은 남는데 제 통장은 항상 빠듯합니다."</li>
+                        <li>"가지급금·명의신탁이 언젠가 문제될 걸 알지만 손을 못 대겠습니다."</li>
+                        <li>"가족·직원 생각하면 승계 이야기를 꺼내기가 무섭습니다."</li>
+                    </ul>
+                    <p style="margin:0.6rem 0 0;font-size:0.86rem;color:#e5e7eb;">
+                        그래서 저는, <strong>"완벽한 정답"보다 "지금 여기서 한 걸음 나아가는 길"</strong>을  
+                        대표님과 함께 찾는 일을 가장 중요하게 생각합니다.
+                    </p>
+                </div>
+                <div class="hero-cta">
+                    <button class="btn-primary" type="button" onclick="showScreenSizeModal()">
+                        한 걸음씩 정리하는 방법 보기
+                    </button>
+                    <div class="hero-note">
+                        당장 결정을 내리지 않으셔도 괜찮습니다.<br>
+                        "우리 상황을 한 번 같이 적어보자"는 마음으로만 보셔도 충분합니다.
+                    </div>
+                </div>
+            </div>
+            <aside class="profile-card">
+                <a href="ｓｙｎ.html" style="text-decoration: none; color: inherit; display: block; -webkit-tap-highlight-color: rgba(147,197,253,0.3);" onclick="goToProfile(event); return false;">
+                    <div class="profile-photo">
+                        <img src="신대식 사진.png" alt="신대식" style="width: 100%; height: 100%; object-fit: cover; border-radius: 999px;" onerror="this.style.display='none'; this.parentElement.querySelector('span').style.display='flex';">
+                        <span style="display: none;">SY</span>
+                    </div>
+                </a>
+                <div class="profile-name">신대식</div>
+                <div class="profile-role">Corporate Deep Dive Consultant</div>
+                <div class="profile-meta">
+                    <p>
+                        <strong>제가 본 현장</strong><br>
+                        법무법인·회생/파산 실무, 소방·안전·ESG, 장애·현장 봉사,  
+                        그리고 수많은 법인 대표님들의 세금·채무·승계 고민까지.  
+                        "조금만 더 일찍 같이 봤으면 좋았을" 순간들을 많이 목격했습니다.
+                    </p>
+                    <p>
+                        <strong>그래서 하고 싶은 일</strong><br>
+                        위기 직전이 아니라 <em>"아직 괜찮을 때"</em>  
+                        대표님 곁에서 숫자와 구조를 함께 들여다보고,  
+                        마음이 조금 가벼워지는 선택지를 한 장씩 만들어 가는 일입니다.
+                    </p>
+                    <p style="margin-top: 1rem; text-align: center;">
+                        <a href="ｓｙｎ.html" onclick="goToProfile(event); return false;" style="color: #93c5fd; text-decoration: underline; font-size: 0.9rem; display: inline-block; padding: 0.5rem 1rem; border-radius: 8px; transition: all 0.3s ease; -webkit-tap-highlight-color: rgba(147,197,253,0.3); touch-action: manipulation;">상세 프로필 보기 →</a>
+                    </p>
+                </div>
+            </aside>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">대표님과 이렇게 한 걸음씩 정리합니다</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <h3>1단계 · 있는 그대로 보기</h3>
+                    <p>
+                        먼저 대표님의 말씀을 듣고, 최근 재무제표·지분·개인 재무를  
+                        <strong>책임 추궁이 아닌 이해의 관점</strong>에서 함께 정리합니다.
+                    </p>
+                    <ul>
+                        <li>· "왜 이렇게 됐는지"를 같이 정리합니다.</li>
+                        <li>· 지금 꼭 고칠 것 / 나중에 봐도 될 것을 구분합니다.</li>
+                        <li>· 대표님이 가장 불안해하시는 지점을 우선 표시합니다.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>2단계 · 작은 변화부터 설계</h3>
+                    <p>
+                        급여·배당·퇴직·보험·지분·가지급금·승계 이슈 중에서  
+                        <strong>가장 부담이 덜한 변화</strong>부터 단계적으로 설계합니다.
+                    </p>
+                    <ul>
+                        <li>· "지금 당장 할 수 있는 것 1~2가지"를 먼저 정합니다.</li>
+                        <li>· 실행 부담이 큰 일은 1~3년 계획으로 분리합니다.</li>
+                        <li>· 각 단계마다 대표님이 체감할 변화를 숫자로 보여드립니다.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>3단계 · 함께 지켜보며 수정</h3>
+                    <p>
+                        계획은 항상 현실과 다를 수 있습니다. 그래서  
+                        <strong>점검과 수정</strong>을 전제로 한 로드맵을 제안드립니다.
+                    </p>
+                    <ul>
+                        <li>· 최소 연 1회, 재무·세금·승계 상황을 함께 점검합니다.</li>
+                        <li>· 환경이 바뀌면, 계획도 함께 조정합니다.</li>
+                        <li>· 대표님이 혼자 고민하지 않으시도록, "같이 보는 사람"이 되겠습니다.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">경력·자격이 아닌, 대표님 곁에 서기 위한 준비들</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <h3>위기를 가까이서 본 눈</h3>
+                    <p>
+                        법학 전공과 회생/파산·법무법인 실무에서  
+                        "사업이 무너지는 순간"과 그 전조들을 여러 번 보았습니다.
+                    </p>
+                    <ul>
+                        <li>· 잘 나가던 회사도 작은 습관 하나로 흔들릴 수 있다는 것,</li>
+                        <li>· 숫자와 계약을 미리 정리했을 때 버틸 수 있는 힘이 다르다는 것을 배웠습니다.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>사고와 안전을 함께 본 경험</h3>
+                    <p>
+                        소방·안전·ESG 관련 자격과 현장 봉사를 통해  
+                        <strong>사고·규제·평판 리스크</strong>가 한 번에 터졌을 때의 무게를 경험했습니다.
+                    </p>
+                    <ul>
+                        <li>· "종이에만 있는 안전"과 "현장에서 작동하는 안전"의 차이를 알게 되었습니다.</li>
+                        <li>· 그래서 재무·보험·ESG를 따로 보지 않고 함께 보려 합니다.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>숫자와 제도를 연결하는 공부</h3>
+                    <p>
+                        빅데이터·AI 교육과 다양한 보험·투자·퇴직연금 자격을 통해  
+                        숫자·세법·상품·제도를 <strong>한 줄의 그림</strong>으로 연결하는 연습을 해왔습니다.
+                    </p>
+                    <ul>
+                        <li>· 특정 상품보다, 대표님 구조에 맞는 조합을 먼저 생각합니다.</li>
+                        <li>· "감"이 아니라 데이터와 시뮬레이션으로 설명드리려 노력합니다.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">기억을 돕는 한 장의 그림</h2>
+            <div class="mindmap-container">
+                <div class="mindmap-connector top-left"></div>
+                <div class="mindmap-connector top-right"></div>
+                <div class="mindmap-connector bottom"></div>
+                
+                <div class="mindmap-center">
+                    <div class="mindmap-center-title">신대식<br>컨설팅</div>
+                    <div class="mindmap-center-sub">Corporate Deep Dive</div>
+                </div>
+                
+                <div class="mindmap-branch top-left">
+                    <div class="mindmap-branch-title">전문성</div>
+                    <div class="mindmap-items">
+                        <div class="mindmap-item">
+                            <strong>위기를 가까이서 본 눈</strong><br>
+                            회생/파산 실무에서 본 위기 패턴과 대응
+                        </div>
+                        <div class="mindmap-item">
+                            <strong>사고와 안전을 함께 본 경험</strong><br>
+                            소방·안전·ESG 리스크의 현실적 무게
+                        </div>
+                        <div class="mindmap-item">
+                            <strong>숫자와 제도를 연결하는 공부</strong><br>
+                            데이터·AI·금융 자격으로 구조 설계
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mindmap-branch top-right">
+                    <div class="mindmap-branch-title">서비스</div>
+                    <div class="mindmap-items">
+                        <div class="mindmap-item">
+                            <strong>1단계 · 있는 그대로 보기</strong><br>
+                            책임 추궁이 아닌 이해의 관점에서 정리
+                        </div>
+                        <div class="mindmap-item">
+                            <strong>2단계 · 작은 변화부터 설계</strong><br>
+                            부담이 덜한 변화부터 단계적으로 설계
+                        </div>
+                        <div class="mindmap-item">
+                            <strong>3단계 · 함께 지켜보며 수정</strong><br>
+                            점검과 수정을 전제로 한 로드맵
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mindmap-branch bottom">
+                    <div class="mindmap-branch-title">핵심 가치</div>
+                    <div class="mindmap-items">
+                        <div class="mindmap-item">
+                            <strong>공감과 이해</strong><br>
+                            "완벽한 정답"보다 "지금 여기서 한 걸음 나아가는 길"
+                        </div>
+                        <div class="mindmap-item">
+                            <strong>함께 정리</strong><br>
+                            대표님의 현실을 먼저 듣고, 숫자와 제도로 함께 정리
+                        </div>
+                        <div class="mindmap-item">
+                            <strong>단계적 접근</strong><br>
+                            급하게가 아니라, 마음이 조금 가벼워지는 선택지를 한 장씩
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        © SYNDΛESIK · Corporate Deep Dive · Empathy Intro 2025
+    </footer>
+</div>
+
+<div class="screen-size-modal" id="screenSizeModal">
+    <div class="screen-size-modal-content">
+        <div class="screen-size-modal-icon">🖥️</div>
+        <div class="screen-size-modal-title">화면 크기 조정 안내</div>
+        <div class="screen-size-modal-text">
+            프레젠테이션을 더 편하게 보시려면<br>
+            <strong>브라우저 창을 최대화</strong>하거나<br>
+            <strong>전체화면 모드(F11)</strong>를 사용해 주세요.<br><br>
+            안내창이 <strong>3초 후</strong> 자동으로 사라집니다.
+        </div>
+        <button class="screen-size-modal-close" onclick="goToPresentation()">프레젠테이션 보기</button>
+    </div>
+</div>
+
+<script>
+    let modalTimer = null;
+    
+    function showScreenSizeModal() {
+        const modal = document.getElementById('screenSizeModal');
+        modal.classList.add('show');
+        
+        modalTimer = setTimeout(() => {
+            goToPresentation();
+        }, 3000);
+    }
+    
+    function goToPresentation() {
+        if (modalTimer) {
+            clearTimeout(modalTimer);
+            modalTimer = null;
+        }
+        
+        const modal = document.getElementById('screenSizeModal');
+        if (modal) {
+            modal.classList.remove('show');
+        }
+        
+        setTimeout(() => {
+            var targetUrl = '법인대표님_Strategy_공감.html';
+            try {
+                window.location.href = targetUrl;
+            } catch (e) {
+                try {
+                    window.location.assign(targetUrl);
+                } catch (e2) {
+                    try {
+                        window.location.replace(targetUrl);
+                    } catch (e3) {
+                        var link = document.createElement('a');
+                        link.href = targetUrl;
+                        link.style.display = 'none';
+                        document.body.appendChild(link);
+                        link.click();
+                        setTimeout(function() {
+                            document.body.removeChild(link);
+                        }, 100);
+                    }
+                }
+            }
+        }, 300);
+    }
+    
+    document.getElementById('screenSizeModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            goToPresentation();
+        }
+    });
+    
+    function goToProfile(e) {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        var targetUrl = 'ｓｙｎ.html';
+        
+        try {
+            window.location.href = targetUrl;
+        } catch (err) {
+            try {
+                window.location.assign(targetUrl);
+            } catch (err2) {
+                try {
+                    window.location.replace(targetUrl);
+                } catch (err3) {
+                    var link = document.createElement('a');
+                    link.href = targetUrl;
+                    link.style.display = 'none';
+                    document.body.appendChild(link);
+                    link.click();
+                    setTimeout(function() {
+                        document.body.removeChild(link);
+                    }, 100);
+                }
+            }
+        }
+        return false;
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const profileLinks = document.querySelectorAll('a[href*="ｓｙｎ"]');
+        profileLinks.forEach(function(link) {
+            link.addEventListener('click', goToProfile, false);
+            link.addEventListener('touchend', goToProfile, { passive: false });
+        });
+        
+        const presentationBtn = document.querySelector('.btn-primary');
+        if (presentationBtn) {
+            presentationBtn.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                showScreenSizeModal();
+            }, { passive: false });
+        }
+    });
+</script>
+</body>
+</html>
+
