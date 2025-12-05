@@ -19,6 +19,36 @@
             color: #333;
         }
 
+        /* 뒤로 가기 헤더 스타일 */
+        .back-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(26, 32, 44, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin: -20px -20px 20px -20px;
+        }
+
+        .back-header a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #60a5fa;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .back-header a:hover {
+            background: rgba(96, 165, 250, 0.1);
+            color: #93c5fd;
+            transform: translateX(-5px);
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -47,8 +77,6 @@
             background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
             animation: rotate 20s linear infinite;
         }
-
-        
 
         @keyframes rotate {
             from { transform: rotate(0deg); }
@@ -424,6 +452,9 @@
             .print-btn {
                 display: none;
             }
+            .back-header {
+                display: none;
+            }
             .container {
                 box-shadow: none;
             }
@@ -471,6 +502,13 @@
     </style>
 </head>
 <body>
+    <!-- 뒤로 가기 헤더 (올바른 위치: body 태그 바로 다음) -->
+    <div class="back-header">
+        <a href="https://synitart.github.io/individual-strategy/">
+            ← 개인사업자 페이지로 돌아가기
+        </a>
+    </div>
+
     <div class="container">
         <div class="header">
             <div class="profile-section">
@@ -492,19 +530,19 @@
                         <strong style="color: #1e3a8a; font-size: 1.1em;">25년 이상의 실무 경험</strong>과 <strong style="color: #1e3a8a; font-size: 1.1em;">10개 이상의 전문 자격증</strong>을 보유한 
                         법무, 재무, 데이터 분석, 보험, 개인연금(DB/DC/IRP), 펀드/신탁, 부동산 경매, 건물 안전관리 분야의 <strong>종합 컨설팅 전문가</strong>입니다.
                     </p>
-                        <p style="margin-top: 25px; font-size: 1.1em; line-height: 2; color: #1e40af;">
+                    <p style="margin-top: 25px; font-size: 1.1em; line-height: 2; color: #1e40af;">
                         법학 전공과 법무법인 경력을 바탕으로, <strong>회생/파산 실무</strong>와 <strong>부동산 경매 전문가</strong>로서 
                         실무 경험을 쌓았습니다. 이후 <strong>MBA 과정</strong>을 통해 경영 전략과 재무 설계 역량을 강화하고, 
                         <strong>병원 M&A 컨설팅</strong>과 <strong>장례식장 인허가·운영</strong> 경력을 통해 의료기관 및 특수 업종 컨설팅 역량을 확보했습니다. 
                         또한 <strong>데이터 분석 및 AI 전문가 과정</strong>을 수료하여 디지털 시대의 컨설팅 역량을 갖추었습니다.
                     </p>
-                        <p style="margin-top: 20px; font-size: 1.1em; line-height: 2; color: #1e40af;">
+                    <p style="margin-top: 20px; font-size: 1.1em; line-height: 2; color: #1e40af;">
                         최근에는 <strong>AFPK(Associate Financial Planner Korea)</strong> 자격을 취득하고, 
                         <strong>생명보험/손해보험/변액보험 설계사</strong>, <strong>퇴직연금제도모집인</strong>, 
                         <strong>펀드/신탁/부동산 투자권유대행인</strong> 자격을 보유하여 
                         기업과 개인의 <strong>재무 설계 컨설팅</strong>을 제공하고 있습니다.
                     </p>
-                        <p style="margin-top: 20px; font-size: 1.1em; line-height: 2; color: #1e40af;">
+                    <p style="margin-top: 20px; font-size: 1.1em; line-height: 2; color: #1e40af;">
                         또한 <strong>소방설비기사(전기·기계) 국가기술자격증</strong>을 보유하여 건물 안전관리 전문가로서 
                         <strong>중대재해처벌법 대응</strong> 및 <strong>법인 부동산 안전 리스크 관리</strong> 컨설팅을 제공하고 있습니다.
                     </p>
@@ -1113,16 +1151,5 @@
         });
     </script>
 </body>
-<header>
-    <div style="padding: 1rem 2rem; background: #1a202c; border-bottom: 1px solid rgba(255,255,255,0.1);">
-        <a href="https://synitart.github.io/individual-strategy/" 
-           style="display: inline-flex; align-items: center; gap: 0.5rem; color: #60a5fa; text-decoration: none; font-weight: 600;">
-            ← 개인사업자 페이지로 돌아가기
-        </a>
-    </div>
-</header>
-    
 </html>
-
-
 
