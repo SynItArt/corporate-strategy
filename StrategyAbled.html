@@ -503,8 +503,13 @@
                 position: relative;
                 inset: auto;
                 min-height: auto;
-                padding: 4.5rem 1rem 6rem; /* 하단 여백 증가 (연락처 공간) */
+                padding: 4.5rem 1rem 2rem; /* 슬라이드 하단 여백 */
                 margin-bottom: 0;
+            }
+            /* 모든 슬라이드가 끝난 후 연락처 표시 */
+            .slide:last-of-type {
+                margin-bottom: 0;
+                padding-bottom: 2rem;
             }
             .progress {
                 position: static;
@@ -512,38 +517,54 @@
                 height: 4px;
             }
             .contact-bar {
-                position: static;
-                padding: 1.5rem 1rem;
+                position: static !important; /* 강제로 static */
+                padding: 2rem 1rem;
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 1rem;
+                gap: 1.5rem;
                 box-shadow: none;
                 background: rgba(1,4,9,0.98);
-                border-top: 2px solid rgba(147,197,253,0.2);
-                margin-top: 2rem;
+                border-top: 3px solid rgba(147,197,253,0.3);
+                margin-top: 3rem;
+                margin-bottom: 2rem;
+                order: 999; /* 가장 마지막에 배치 */
             }
             .contact-logo {
                 width: 100%;
                 justify-content: flex-start;
+                padding-bottom: 0.5rem;
+                border-bottom: 1px solid rgba(147,197,253,0.2);
             }
             .contact-logo img {
-                height: 45px;
+                height: 50px;
             }
             .contact-info {
                 width: 100%;
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 0.8rem;
+                gap: 1rem;
             }
             .contact-disclaimer {
-                font-size: 0.75rem;
-                line-height: 1.6;
+                font-size: 0.8rem;
+                line-height: 1.7;
+                color: rgba(255,255,255,0.7);
+                padding: 1rem;
+                background: rgba(147,197,253,0.1);
+                border-radius: 12px;
+                border-left: 3px solid #93c5fd;
             }
             .contact-item {
                 width: 100%;
-                padding: 0.75rem 1rem;
-                font-size: 0.95rem;
+                padding: 1rem 1.25rem;
+                font-size: 1rem;
                 justify-content: flex-start;
+                background: rgba(255,255,255,0.08);
+                border: 1px solid rgba(147,197,253,0.2);
+                border-radius: 12px;
+            }
+            .contact-item:hover {
+                background: rgba(147,197,253,0.2);
+                border-color: #93c5fd;
             }
             .swipe-hint-popup {
                 bottom: auto;
