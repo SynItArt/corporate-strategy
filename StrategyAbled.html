@@ -420,6 +420,65 @@
         .time-slot.booked:hover {
             background: rgba(239,68,68,0.4);
         }
+        /* 스와이프 안내 팝업 */
+        .swipe-hint-popup {
+            position: fixed;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, rgba(37,99,235,0.95), rgba(168,85,247,0.95));
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(147,197,253,0.5);
+            border-radius: 20px;
+            padding: 1.2rem 1.8rem;
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 600;
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            gap: 0.8rem;
+            box-shadow: 0 10px 40px rgba(37,99,235,0.4);
+            animation: swipeHintPulse 2s ease-in-out infinite;
+            max-width: 90%;
+            text-align: center;
+        }
+        .swipe-hint-popup.show {
+            display: flex;
+        }
+        .swipe-hint-popup .swipe-icon {
+            font-size: 1.5rem;
+            animation: swipeHintMove 1.5s ease-in-out infinite;
+        }
+        @keyframes swipeHintPulse {
+            0%, 100% { transform: translateX(-50%) scale(1); opacity: 1; }
+            50% { transform: translateX(-50%) scale(1.05); opacity: 0.9; }
+        }
+        @keyframes swipeHintMove {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        .swipe-hint-popup .close-hint {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: #fff;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            line-height: 1;
+            margin-left: 0.5rem;
+            transition: all 0.2s ease;
+        }
+        .swipe-hint-popup .close-hint:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
         @media (max-width: 1024px) {
             .slide { padding: clamp(4rem,7vh,5rem) 1.5rem 4rem; }
             .card { padding: 1.6rem; }
@@ -444,7 +503,8 @@
                 position: relative;
                 inset: auto;
                 min-height: auto;
-                padding: 4.5rem 1rem 4rem;
+                padding: 4.5rem 1rem 6rem; /* 하단 여백 증가 (연락처 공간) */
+                margin-bottom: 0;
             }
             .progress {
                 position: static;
@@ -453,20 +513,47 @@
             }
             .contact-bar {
                 position: static;
-                padding: 1rem;
+                padding: 1.5rem 1rem;
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 0.8rem;
+                gap: 1rem;
                 box-shadow: none;
+                background: rgba(1,4,9,0.98);
+                border-top: 2px solid rgba(147,197,253,0.2);
+                margin-top: 2rem;
+            }
+            .contact-logo {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            .contact-logo img {
+                height: 45px;
             }
             .contact-info {
                 width: 100%;
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 0.6rem;
+                gap: 0.8rem;
+            }
+            .contact-disclaimer {
+                font-size: 0.75rem;
+                line-height: 1.6;
             }
             .contact-item {
                 width: 100%;
+                padding: 0.75rem 1rem;
+                font-size: 0.95rem;
+                justify-content: flex-start;
+            }
+            .swipe-hint-popup {
+                bottom: auto;
+                top: 80px;
+                font-size: 0.85rem;
+                padding: 1rem 1.5rem;
+                left: 1rem;
+                right: 1rem;
+                transform: none;
+                max-width: none;
             }
         }
         @media (orientation: landscape) and (max-height: 600px) {
@@ -882,6 +969,13 @@
     </header>
 
     <div class="progress"><div id="progressFill" class="progress-fill"></div></div>
+
+    <!-- 스와이프 안내 팝업 -->
+    <div class="swipe-hint-popup" id="swipeHintPopup">
+        <span class="swipe-icon">👈👉</span>
+        <span>좌우로 스와이프하여 슬라이드를 이동하세요</span>
+        <button class="close-hint" id="closeSwipeHint" aria-label="닫기">×</button>
+    </div>
 
     <footer class="contact-bar">
         <div class="contact-logo">
@@ -3883,6 +3977,71 @@ graph LR
         const contactModal = document.getElementById('contactModal');
         const closeModal = document.getElementById('closeModal');
 
+        // 스와이프 안내 팝업 관리
+        const swipeHintPopup = document.getElementById('swipeHintPopup');
+        const closeSwipeHint = document.getElementById('closeSwipeHint');
+        let swipeHintShown = localStorage.getItem('swipeHintShown') === 'true';
+        
+        // 모바일에서만 스와이프 안내 표시
+        function showSwipeHint() {
+            if (window.innerWidth <= 1024 && !swipeHintShown) {
+                swipeHintPopup.classList.add('show');
+                setTimeout(() => {
+                    swipeHintPopup.classList.remove('show');
+                }, 5000); // 5초 후 자동 숨김
+            }
+        }
+        
+        closeSwipeHint.addEventListener('click', () => {
+            swipeHintPopup.classList.remove('show');
+            swipeHintShown = true;
+            localStorage.setItem('swipeHintShown', 'true');
+        });
+        
+        // 페이지 로드 시 스와이프 안내 표시
+        setTimeout(showSwipeHint, 1000);
+        
+        // 터치 스와이프 기능
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let touchStartTime = 0;
+        const minSwipeDistance = 50; // 최소 스와이프 거리
+        const maxSwipeTime = 500; // 최대 스와이프 시간 (ms)
+        
+        document.addEventListener('touchstart', (e) => {
+            if (contactModal.classList.contains('active')) return;
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartTime = Date.now();
+        }, { passive: true });
+        
+        document.addEventListener('touchend', (e) => {
+            if (contactModal.classList.contains('active')) return;
+            touchEndX = e.changedTouches[0].screenX;
+            const touchEndTime = Date.now();
+            const swipeTime = touchEndTime - touchStartTime;
+            const swipeDistance = Math.abs(touchEndX - touchStartX);
+            
+            // 스와이프 조건 확인
+            if (swipeDistance > minSwipeDistance && swipeTime < maxSwipeTime) {
+                const diff = touchStartX - touchEndX;
+                
+                if (diff > 0) {
+                    // 왼쪽으로 스와이프 (다음 슬라이드)
+                    showSlide(currentPartIndex + 1);
+                } else {
+                    // 오른쪽으로 스와이프 (이전 슬라이드)
+                    showSlide(currentPartIndex - 1);
+                }
+                
+                // 스와이프 안내 팝업 숨기기
+                if (swipeHintPopup.classList.contains('show')) {
+                    swipeHintPopup.classList.remove('show');
+                    swipeHintShown = true;
+                    localStorage.setItem('swipeHintShown', 'true');
+                }
+            }
+        }, { passive: true });
+        
         document.addEventListener('keydown', (e) => {
             // Close modal with ESC
             if (e.key === 'Escape' && contactModal.classList.contains('active')) {
